@@ -1,26 +1,99 @@
 <script setup>
+import { ref, computed } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+import CartaCatalogo from './CartaCatalogo.vue';
 
 const props = defineProps({
-  carta: {
-    type: Object,
+  catalogo: {
+    type: Array,
     required: true,
   },
 });
 
 const emit = defineEmits(['agregar']);
 
-const handleAgregar = () => {
-  emit('agregar', props.carta.id);
+// Estado de UI
+const textoBusqueda = ref('');
+const filtroTipo = ref('Todas');
+const filtroRareza = ref('Todas');
+const filtroCoste = ref('Todos');
+
+// Lista filtrada
+const cartasFiltradas = computed(() => {
+  return props.catalogo.filter((carta) => {
+    const nombre = carta.nombre.toLowerCase();
+    const busqueda = textoBusqueda.value.toLowerCase().trim();
+
+    const coincideNombre = nombre.includes(busqueda);
+    const coincideTipo =
+      filtroTipo.value === 'Todas' || carta.tipo === filtroTipo.value;
+    const coincideRareza =
+      filtroRareza.value === 'Todas' || carta.rareza === filtroRareza.value;
+    const coincideCoste =
+      filtroCoste.value === 'Todos' ||
+      carta.coste === Number(filtroCoste.value);
+
+    return coincideNombre && coincideTipo && coincideRareza && coincideCoste;
+  });
+});
+
+const handleAgregar = (idCarta) => {
+  emit('agregar', idCarta);
 };
 </script>
 
 <template>
-  <article class="carta" :class="['carta--' + carta.rareza.toLowerCase()]">
-    <span class="carta__emoji">{{ carta.emoji }}</span>
-    <h3 class="carta__nombre">{{ carta.nombre }}</h3>
-    <p class="carta__tipo">{{ carta.tipo }}</p>
-    <p class="carta__coste">Coste: {{ carta.coste }}</p>
-    <button type="button" @click="handleAgregar">+</button>
-  </article>
+  <section class="catalogo">
+    <h2>Catálogo</h2>
+
+    <div class="catalogo__filtros">
+      <input
+        type="text"
+        v-model="textoBusqueda"
+        placeholder="Buscar por nombre..."
+      />
+
+      <select v-model="filtroTipo">
+        <option value="Todas">Tipo: Todas</option>
+        <option value="Criatura">Criatura</option>
+        <option value="Hechizo">Hechizo</option>
+        <option value="Trampa">Trampa</option>
+      </select>
+
+      <select v-model="filtroRareza">
+        <option value="Todas">Rareza: Todas</option>
+        <option value="Común">Común</option>
+        <option value="Rara">Rara</option>
+        <option value="Épica">Épica</option>
+      </select>
+
+      <select v-model="filtroCoste">
+        <option value="Todos">Coste: Todos</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+    </div>
+
+    <div class="catalogo__lista">
+      <p v-if="cartasFiltradas.length === 0">
+        Ninguna carta coincide
+      </p>
+
+      <CartaCatalogo
+        v-for="carta in cartasFiltradas"
+        :key="carta.id"
+        :carta="carta"
+        @agregar="handleAgregar"
+      />
+    </div>
+  </section>
 </template>

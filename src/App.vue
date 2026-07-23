@@ -25,7 +25,55 @@ const costeMedio = computed(() => {
   return Number((costeTotal / totalCartas.value).toFixed(2));
 });
 
-// Ejemplo de persistencia simple (luego la puedes mejorar)
+// Función para agregar carta al mazo respetando reglas (máx 30, máx 2 copias)
+const agregarCartaAlMazo = (idCarta) => {
+  const entradaExistente = mazo.value.find((entrada) => entrada.id === idCarta);
+
+  const totalActual = mazo.value.reduce((acc, e) => acc + e.cantidad, 0);
+  if (totalActual >= 30) {
+    // Aquí luego puedes poner un aviso visual
+    return;
+  }
+
+  if (!entradaExistente) {
+    mazo.value.push({ id: idCarta, cantidad: 1 });
+  } else if (entradaExistente.cantidad < 2) {
+    entradaExistente.cantidad += 1;
+  } else {
+    // Aquí también puedes avisar: ya tiene 2 copias
+  }
+};
+
+const ajustarCantidadCarta = (idCarta, nuevaCantidad) => {
+  const entrada = mazo.value.find((e) => e.id === idCarta);
+  if (!entrada) return;
+
+  // Si nuevaCantidad es 0, la quitamos
+  if (nuevaCantidad <= 0) {
+    mazo.value = mazo.value.filter((e) => e.id !== idCarta);
+    return;
+  }
+
+  // Respetar límite de 2 copias
+  if (nuevaCantidad > 2) {
+    entrada.cantidad = 2;
+  } else {
+    entrada.cantidad = nuevaCantidad;
+  }
+
+  // Respetar límite de 30 totales
+  const totalActual = mazo.value.reduce((acc, e) => acc + e.cantidad, 0);
+  if (totalActual > 30) {
+    // Si te pasas, puedes ajustar o mostrar aviso; por simplicidad, no dejamos pasar
+    entrada.cantidad -= (totalActual - 30);
+  }
+};
+
+const quitarCartaDelMazo = (idCarta) => {
+  mazo.value = mazo.value.filter((e) => e.id !== idCarta);
+};
+
+// Persistencia básica: guardar cada vez que cambie el mazo
 watch(
   mazo,
   (nuevo) => {
@@ -44,9 +92,19 @@ if (guardado) {
 <template>
   <main class="app">
     <h1>Deck Forge</h1>
-    <!-- Aquí irán más adelante <Catalogo /> y <PanelMazo /> -->
-    <p>Total de cartas en el mazo: {{ totalCartas }}</p>
-    <p>Coste medio: {{ costeMedio }}</p>
+
+    <section class="layout">
+      <Catalogo
+        :catalogo="catalogo"
+        @agregar="agregarCartaAlMazo"
+      />
+
+      <!-- Más adelante aquí irá PanelMazo -->
+      <section>
+        <p>Total de cartas en el mazo: {{ totalCartas }}</p>
+        <p>Coste medio: {{ costeMedio }}</p>
+      </section>
+    </section>
   </main>
 </template>
 

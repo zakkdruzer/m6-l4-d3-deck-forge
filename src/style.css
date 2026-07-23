@@ -15,3 +15,14 @@
 .carta--épica {
   border-color: #9c27b0;
 }
+
+.panel-mazo {
+  padding: 1rem;
+}
+
+.carta-mazo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}

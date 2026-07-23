@@ -99,11 +99,12 @@ if (guardado) {
         @agregar="agregarCartaAlMazo"
       />
 
-      <!-- Más adelante aquí irá PanelMazo -->
-      <section>
-        <p>Total de cartas en el mazo: {{ totalCartas }}</p>
-        <p>Coste medio: {{ costeMedio }}</p>
-      </section>
+      <PanelMazo
+        :catalogo="catalogo"
+        :mazo="mazo"
+        @ajustar="ajustarCantidadCarta"
+        @quitar="quitarCartaDelMazo"
+      />
     </section>
   </main>
 </template>

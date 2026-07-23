@@ -65,7 +65,7 @@ const handleQuitar = (idCarta) => {
       <h3>Estadísticas</h3>
       <p>Cantidad total de cartas: {{ totalCartas }}</p>
       <p>Coste promedio del mazo: {{ costeMedio }}</p>
-      <!-- Más adelante aquí colocamos curva de maná y distribución por tipo -->
+      <!-- Aquí luego añadimos curva de maná y distribución por tipo -->
     </div>
   </section>
 </template>

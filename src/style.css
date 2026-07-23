@@ -26,3 +26,42 @@
   align-items: center;
   margin-bottom: 0.5rem;
 }
+
+.stats-mazo {
+  margin-top: 1rem;
+}
+
+.curva-mana {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.curva-mana__fila {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.curva-mana__coste {
+  width: 2rem;
+  text-align: right;
+  font-weight: bold;
+}
+
+.curva-mana__barra-wrap {
+  flex: 1;
+  background-color: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.curva-mana__barra {
+  height: 0.6rem;
+  background: linear-gradient(90deg, #4caf50, #2196f3);
+}
+
+.curva-mana__cantidad {
+  width: 2rem;
+  text-align: left;
+}

@@ -65,3 +65,18 @@
   width: 2rem;
   text-align: left;
 }
+
+.panel-mazo__alerta {
+  color: #e53935;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.carta-mazo--limite {
+  border: 2px solid #ff9800;
+}
+
+.carta-mazo__alerta {
+  color: #ff9800;
+  font-size: 0.8rem;
+}

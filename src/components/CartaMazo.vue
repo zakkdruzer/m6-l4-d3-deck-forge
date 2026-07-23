@@ -8,7 +8,7 @@ const props = defineProps({
   },
   carta: {
     type: Object,
-    required: true, // datos de la carta del catálogo
+    required: true,
   },
 });
 
@@ -28,7 +28,12 @@ const quitar = () => {
 </script>
 
 <template>
-  <article class="carta-mazo">
+  <article
+    class="carta-mazo"
+    :class="{
+      'carta-mazo--limite': entrada.cantidad >= 2
+    }"
+  >
     <div class="carta-mazo__info">
       <span class="carta-mazo__emoji">{{ carta.emoji }}</span>
       <span class="carta-mazo__nombre">{{ carta.nombre }}</span>
@@ -41,5 +46,9 @@ const quitar = () => {
       <button type="button" @click="subir">+</button>
       <button type="button" @click="quitar">Quitar</button>
     </div>
+
+    <p v-if="entrada.cantidad >= 2" class="carta-mazo__alerta">
+      Máximo de 2 copias alcanzado.
+    </p>
   </article>
 </template>

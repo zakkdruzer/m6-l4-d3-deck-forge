@@ -80,3 +80,36 @@
   color: #ff9800;
   font-size: 0.8rem;
 }
+
+.distribucion-tipos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.distribucion-tipos__fila {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.distribucion-tipos__tipo {
+  width: 5rem;
+  font-weight: bold;
+}
+
+.distribucion-tipos__barra-wrap {
+  flex: 1;
+  background-color: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.distribucion-tipos__barra {
+  height: 0.6rem;
+  background: linear-gradient(90deg, #ff9800, #f44336);
+}
+
+.distribucion-tipos__porcentaje {
+  width: 3rem;
+}

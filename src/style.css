@@ -1,13 +1,86 @@
+/* Layout general */
 .app {
   padding: 2rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #121212;
+  color: #f5f5f5;
 }
 
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Catálogo */
+.catalogo {
+  padding: 1rem;
+  background-color: #1e1e1e;
+  border-radius: 0.75rem;
+}
+
+.catalogo__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.catalogo__filtros input,
+.catalogo__filtros select {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #444;
+  background-color: #222;
+  color: #f5f5f5;
+}
+
+.catalogo__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Carta en el catálogo */
 .carta {
   border: 2px solid #ccc;
   padding: 0.75rem;
   border-radius: 0.5rem;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.carta__emoji {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.carta__nombre {
+  font-weight: bold;
+}
+
+.carta__tipo,
+.carta__coste {
+  font-size: 0.9rem;
+}
+
+.carta button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.carta button:hover {
+  background-color: #43a047;
+}
+
+/* Bordes dinámicos por rareza */
 .carta--común {
   border-color: #4caf50;
 }
@@ -20,21 +93,77 @@
   border-color: #9c27b0;
 }
 
+/* Panel del mazo */
 .panel-mazo {
   padding: 1rem;
+  background-color: #1e1e1e;
+  border-radius: 0.75rem;
 }
 
+.panel-mazo__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Carta en el mazo */
 .carta-mazo {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
 }
 
+.carta-mazo__info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.carta-mazo__emoji {
+  font-size: 1.4rem;
+}
+
+.carta-mazo__controles button {
+  padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: #2196f3;
+  color: #fff;
+  cursor: pointer;
+}
+
+.carta-mazo__controles button:hover {
+  background-color: #1e88e5;
+}
+
+/* Avisos de límites */
+.panel-mazo__alerta {
+  color: #e53935;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.carta-mazo--limite {
+  border: 2px solid #ff9800;
+}
+
+.carta-mazo__alerta {
+  color: #ff9800;
+  font-size: 0.8rem;
+}
+
+/* Stats del mazo */
 .stats-mazo {
   margin-top: 1rem;
 }
 
+/* Curva de maná */
 .curva-mana {
   display: flex;
   flex-direction: column;
@@ -55,7 +184,7 @@
 
 .curva-mana__barra-wrap {
   flex: 1;
-  background-color: #eee;
+  background-color: #333;
   border-radius: 999px;
   overflow: hidden;
 }
@@ -70,21 +199,7 @@
   text-align: left;
 }
 
-.panel-mazo__alerta {
-  color: #e53935;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.carta-mazo--limite {
-  border: 2px solid #ff9800;
-}
-
-.carta-mazo__alerta {
-  color: #ff9800;
-  font-size: 0.8rem;
-}
-
+/* Distribución por tipo */
 .distribucion-tipos {
   display: flex;
   flex-direction: column;
@@ -104,7 +219,7 @@
 
 .distribucion-tipos__barra-wrap {
   flex: 1;
-  background-color: #eee;
+  background-color: #333;
   border-radius: 999px;
   overflow: hidden;
 }
@@ -116,4 +231,52 @@
 
 .distribucion-tipos__porcentaje {
   width: 3rem;
+}
+
+/* Mazos guardados */
+.mazos-guardados {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #333;
+}
+
+.mazos-guardados form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.mazos-guardados input {
+  flex: 1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #444;
+  background-color: #222;
+  color: #f5f5f5;
+}
+
+.mazos-guardados button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: #673ab7;
+  color: #fff;
+  cursor: pointer;
+}
+
+.mazos-guardados button:hover {
+  background-color: #5e35b1;
+}
+
+.mazos-guardados ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mazos-guardados li button {
+  background-color: #424242;
 }

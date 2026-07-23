@@ -3,11 +3,13 @@ import { ref, computed } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 import CartaCatalogo from './CartaCatalogo.vue';
 
+const orden = ref('nombre'); // 'nombre' o 'coste'
+
 const props = defineProps({
-  catalogo: {
-    type: Array,
-    required: true,
-  },
+    catalogo: {
+        type: Array,
+        required: true,
+    },
 });
 
 const emit = defineEmits(['agregar']);
@@ -20,25 +22,39 @@ const filtroCoste = ref('Todos');
 
 // Lista filtrada
 const cartasFiltradas = computed(() => {
-  return props.catalogo.filter((carta) => {
-    const nombre = carta.nombre.toLowerCase();
-    const busqueda = textoBusqueda.value.toLowerCase().trim();
+    // 1. Filtrado
+    const filtradas = props.catalogo.filter((carta) => {
+        const nombre = carta.nombre.toLowerCase();
+        const busqueda = textoBusqueda.value.toLowerCase().trim();
 
-    const coincideNombre = nombre.includes(busqueda);
-    const coincideTipo =
-      filtroTipo.value === 'Todas' || carta.tipo === filtroTipo.value;
-    const coincideRareza =
-      filtroRareza.value === 'Todas' || carta.rareza === filtroRareza.value;
-    const coincideCoste =
-      filtroCoste.value === 'Todos' ||
-      carta.coste === Number(filtroCoste.value);
+        const coincideNombre = nombre.includes(busqueda);
+        const coincideTipo =
+            filtroTipo.value === 'Todas' || carta.tipo === filtroTipo.value;
+        const coincideRareza =
+            filtroRareza.value === 'Todas' || carta.rareza === filtroRareza.value;
+        const coincideCoste =
+            filtroCoste.value === 'Todos' ||
+            carta.coste === Number(filtroCoste.value);
 
-    return coincideNombre && coincideTipo && coincideRareza && coincideCoste;
-  });
+        return coincideNombre && coincideTipo && coincideRareza && coincideCoste;
+    });
+
+    // 2. Ordenamiento
+    if (orden.value === 'nombre') {
+        return filtradas.slice().sort((a, b) =>
+            a.nombre.localeCompare(b.nombre)
+        );
+    }
+
+    if (orden.value === 'coste') {
+        return filtradas.slice().sort((a, b) => a.coste - b.coste);
+    }
+
+    return filtradas;
 });
 
 const handleAgregar = (idCarta) => {
-  emit('agregar', idCarta);
+    emit('agregar', idCarta);
 };
 </script>
 
@@ -81,9 +97,18 @@ const handleAgregar = (idCarta) => {
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
+
+      <select v-model="orden">
+        <option value="nombre">Ordenar por nombre</option>
+        <option value="coste">Ordenar por coste</option>
+      </select>
     </div>
 
     <div class="catalogo__lista">
+      <p>
+        Cartas visibles: {{ cartasFiltradas.length }}
+      </p>
+
       <p v-if="cartasFiltradas.length === 0">
         Ninguna carta coincide
       </p>

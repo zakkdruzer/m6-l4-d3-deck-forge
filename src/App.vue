@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
+import Catalogo from './components/Catalogo.vue';
+import PanelMazo from './components/PanelMazo.vue';
 
 // Catálogo base (ejemplo)
 const catalogo = ref([
